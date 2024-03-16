@@ -33,4 +33,4 @@ function command(cmd){
 })
 }
 
-module.exports = { bot_token, prefix_file }
+module.exports = { bot_token, prefix_file, command }

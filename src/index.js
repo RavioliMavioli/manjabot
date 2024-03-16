@@ -1,6 +1,6 @@
 const { Client, IntentsBitField } = require("discord.js")
 
-const { bot_token, prefix_file } = require("./var.js")
+const { bot_token, prefix_file, command } = require("./var.js")
 const { process_input, home_folder, change_pass } = require ("./lib/cli.js")
 
 
@@ -9,6 +9,7 @@ const send_prefix = prefix_file.send_prefix
 const sendfile_prefix = prefix_file.sendfile_prefix
 const help_prefix = prefix_file.help_prefix
 const change_prefix = prefix_file.change_prefix
+const send_ss_prefix = prefix_file.send_ss_prefix
 
 const client = new Client({
   intents: [
@@ -35,6 +36,7 @@ client.on("messageCreate", async (_message)=>{
     if(msg === prefix) {_message.reply("emuach"); return}
     if(msg_sliced.includes(help_prefix)) {send_help(_message); return}
     if(msg_sliced.includes(send_prefix)) {send_or_reply(_message, msg_sliced); return}
+    if(msg_sliced.includes(send_ss_prefix)) {send_ss(_message); return}
     if(msg_sliced.includes(change_prefix)) {change_pass(_message, msg_sliced, change_prefix); return}
 
     let final_msg = await process_input(msg_sliced)
@@ -107,4 +109,11 @@ function ret_err(_message, err){
 
                                                               })
   console.log(err.toString())
+}
+
+
+async function send_ss(_message){
+  const ss_path = "Desktop/ss.png"
+  command(`spectacle -f -b -o ${ss_path}`)
+  send_files(_message, ss_path)
 }
