@@ -35,7 +35,7 @@ client.on("messageCreate", async (_message)=>{
     if(msg === prefix) {_message.reply("emuach"); return}
     if(msg_sliced.includes(help_prefix)) {send_help(_message); return}
     if(msg_sliced.includes(send_prefix)) {send_or_reply(_message, msg_sliced); return}
-    if(msg_sliced.includes(change_prefix)) {change_pass(_message); return}
+    if(msg_sliced.includes(change_prefix)) {change_pass(_message, msg_sliced, change_prefix); return}
 
     let final_msg = await process_input(msg_sliced)
     console.log(final_msg)
@@ -96,7 +96,7 @@ function send_files (_message, msg){
 }
 
 function send_help(_message){
-  let help = "```" + ">> help\n>> changepass\n>> send {tulis apa disini terserah}\n>> sendfile {file path}\n>> {shell commands}" + "```"
+  let help = "```" + ">> help\n>> changepass {new password}\n>> send {tulis apa disini terserah}\n>> sendfile {file path}\n>> {shell commands}" + "```"
 
   _message.channel.send(help)
 }

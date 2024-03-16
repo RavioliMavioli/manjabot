@@ -56,10 +56,11 @@ function execShellCommand(cmd) {
  })
 }
 
-async function change_pass(_message){
-  await _message.reply("```Open your terminal```")
-  await setTimeout(()=>{_message.reply("```Timeout```"); return}, 8000)
-  sudo_pass = prompt('sudo password: ')
+async function change_pass(_message, msg_sliced, change_prefix){
+  let pwd = msg_sliced.replace(change_prefix, "").replace(" ", "")
+  
+  sudo_pass = pwd
+  
   alias = [
     {cmd: "pacman", alias: "pacman --noconfirm"},
     {cmd: "neofetch", alias: "neofetch --stdout"},
