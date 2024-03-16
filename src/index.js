@@ -98,7 +98,7 @@ function send_files (_message, msg){
 }
 
 function send_help(_message){
-  let help = "```" + ">> help\n>> changepass {new password}\n>> send {tulis apa disini terserah}\n>> sendfile {file path}\n>> {shell commands}" + "```"
+  let help = "```" + ">> help\n>> upload_ss\n>> changepass {new password}\n>> send {tulis apa disini terserah}\n>> sendfile {file path}\n>> {shell commands}" + "```"
 
   _message.channel.send(help)
 }
