@@ -3,7 +3,7 @@ const prompt = require('prompt-sync')()
 let sudo_pass = prompt('sudo password: ')
 let home_folder = os.homedir() + "/"
 let working_dir = home_folder
-let forbidden_commands = ["vim", "nano", "vi", "kill", "pkill", "reboot", "shutdown"]
+let forbidden_commands = ["reboot", "shutdown", "xterm", "base64", "base32", "z-base", "Geohash"]
 let output_msg
 let alias = [
   {cmd: "pacman", alias: "pacman --noconfirm"},
@@ -34,12 +34,15 @@ function execShellCommand(cmd) {
 
   forbidden_commands.forEach((com) => {
     if (cmd.includes(com)){
-      console.log("cmd: ", cmd)
-      console.log("com: ", com)
       can_exec = false
       resolve ("Gk boleh")
     }
   })
+
+  if (cmd.includes("kill") && cmd.includes("node")){
+    can_exec = false
+    resolve ("Gk boleh")
+  }
 
   if (can_exec){
 

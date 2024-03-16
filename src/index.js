@@ -33,11 +33,12 @@ client.on("messageCreate", async (_message)=>{
   console.log(msg)
   if (_message.author.bot) return
   if (msg.startsWith(prefix)){
+    while (msg_sliced.startsWith(" ")) msg_sliced = msg_sliced.slice(1)
     if(msg === prefix) {_message.reply("emuach"); return}
-    if(msg_sliced.includes(help_prefix)) {send_help(_message); return}
-    if(msg_sliced.includes(send_prefix)) {send_or_reply(_message, msg_sliced); return}
-    if(msg_sliced.includes(send_ss_prefix)) {send_ss(_message); return}
-    if(msg_sliced.includes(change_prefix)) {change_pass(_message, msg_sliced, change_prefix); return}
+    if(msg_sliced.startsWith(help_prefix)) {send_help(_message); return}
+    if(msg_sliced.startsWith(send_prefix)) {send_or_reply(_message, msg_sliced); return}
+    if(msg_sliced.startsWith(send_ss_prefix)) {send_ss(_message); return}
+    if(msg_sliced.startsWith(change_prefix)) {change_pass(_message, msg_sliced, change_prefix); return}
 
     let final_msg = await process_input(msg_sliced)
     console.log(final_msg)
@@ -114,6 +115,6 @@ function ret_err(_message, err){
 
 async function send_ss(_message){
   const ss_path = home_folder + "Desktop/ss.jpg"
-  command(`spectacle -f -b -o ${ss_path}`)
-  send_files(_message, "Desktop/ss.jpg")
+  await command(`spectacle -f -b -o ${ss_path}`)
+  await send_files(_message, "Desktop/ss.jpg")
 }
