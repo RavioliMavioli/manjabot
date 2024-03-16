@@ -113,7 +113,7 @@ function ret_err(_message, err){
 
 
 async function send_ss(_message){
-  const ss_path = "Desktop/ss.png"
+  const ss_path = home_folder + "Desktop/ss.jpg"
   command(`spectacle -f -b -o ${ss_path}`)
-  send_files(_message, ss_path)
+  send_files(_message, "Desktop/ss.jpg")
 }
