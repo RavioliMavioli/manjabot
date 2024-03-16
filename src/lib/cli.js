@@ -30,10 +30,6 @@ function execShellCommand(cmd) {
  return new Promise((resolve, reject) => {
   let can_exec = true
 
-  setTimeout(()=>{
-    reject("Command nya kelamaan")
-  }, 30000)
-
   forbidden_commands.forEach((com) => {
     if (cmd.includes(com)){
       console.log("cmd: ", cmd)
