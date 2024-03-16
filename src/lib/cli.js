@@ -1,5 +1,6 @@
 const os = require("os");
-
+const prompt = require('prompt-sync')()
+let sudo_pass = prompt('sudo password: ')
 let home_folder = os.homedir() + "/"
 let working_dir = home_folder
 let forbidden_commands = ["vim", "nano", "vi", "kill", "pkill", "reboot", "shutdown"]
@@ -8,6 +9,7 @@ let alias = [
   {cmd: "pacman", alias: "pacman --noconfirm"},
   {cmd: "neofetch", alias: "neofetch --stdout"},
   {cmd: "yay", alias: "yay --noconfirm"},
+  {cmd: "sudo", alias: `echo ${sudo_pass} | sudo -S`}
 ]
 const MAX_LENGTH = 2000
 
@@ -54,4 +56,18 @@ function execShellCommand(cmd) {
  })
 }
 
-module.exports = { process_input, home_folder }
+async function change_pass(_message){
+  await _message.reply("```Open your terminal```")
+  setTimeout(()=>{_message.reply("```Timeout```"); return}, 8000)
+  sudo_pass = prompt('sudo password: ')
+  alias = [
+    {cmd: "pacman", alias: "pacman --noconfirm"},
+    {cmd: "neofetch", alias: "neofetch --stdout"},
+    {cmd: "yay", alias: "yay --noconfirm"},
+    {cmd: "sudo", alias: `echo ${sudo_pass} | sudo -S`}
+  ]
+  await _message.reply("```Sudo password changed```")
+  return
+}
+
+module.exports = { process_input, home_folder, change_pass }

@@ -2,5 +2,6 @@
   "prefix": ">>",
   "send_prefix": "send",
   "sendfile_prefix": "sendfile",
-  "help_prefix": "help"
+  "help_prefix": "help",
+  "change_prefix": "changepass"
 }
