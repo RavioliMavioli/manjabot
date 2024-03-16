@@ -10,10 +10,10 @@ npm install
 ./run.sh
 ```
 
-Commands:
+Commands:<br>
 Run ```>> help``` display bot commands.
 
-Token:
+Token:<br>
 Token is stored in ```src/assets/manjakey.json.gpg``` with gpg encryption.
 The decryption is done via terminal when you first run the bot.
 Json Structure:
