@@ -1,2 +1,3 @@
 #!/bin/bash
-node src/index.js
+git pull;
+node src/index.js;
