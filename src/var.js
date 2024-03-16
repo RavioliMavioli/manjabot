@@ -1,15 +1,12 @@
 const { execSync } = require('child_process')
 const prompt = require('prompt-sync')()
-const path = require('path')
 const fs = require('fs')
 
 const prefix_file = require("./assets/prefix.json")
-const home_folder = "/home/manjabot/"
-const prefix = prefix_file.prefix
 let bot_token = null
 
-const enc_path = "/home/manjabot/Applications/manjabot/src/assets/manjakey.json.gpg"
-const tmp_path = "src/tmp.json"
+const enc_path = "src/assets/manjakey.json.gpg"
+const tmp_path = "src/assets/tmp.json"
 let dec_file = null
 
 
@@ -36,4 +33,4 @@ function command(cmd){
 })
 }
 
-module.exports = { bot_token, prefix }
+module.exports = { bot_token, prefix_file }

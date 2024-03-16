@@ -1,10 +1,11 @@
 const { Client, IntentsBitField } = require("discord.js")
-const { output_msg, process_input } = require ("./lib/cli.js")
-const { bot_token, prefix } = require("./var.js")
+const { process_input, home_folder } = require ("./lib/cli.js")
+const { bot_token, prefix_file } = require("./var.js")
 
-const send_prefix = "send"
-const sendfile_prefix = "sendfile"
-const help_prefix = "help"
+const prefix = prefix_file.prefix
+const send_prefix = prefix_file.send_prefix
+const sendfile_prefix = prefix_file.sendfile_prefix
+const help_prefix = prefix_file.help_prefix
 
 const client = new Client({
   intents: [
@@ -55,7 +56,7 @@ try{
     }
 
     let msgs = await _message.channel.messages.fetch()
-    let tgt = msgs.filter((m) => {
+    msgs.filter((m) => {
 
       if (m.id == _message.reference.messageId) {
         if (!msg_sliced.includes(sendfile_prefix)) {

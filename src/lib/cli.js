@@ -1,6 +1,6 @@
+const os = require("os");
 
-let root_folder = "/"
-let home_folder = "/home/manjabot/"
+let home_folder = os.homedir() + "/"
 let working_dir = home_folder
 let forbidden_commands = ["vim", "nano", "vi", "kill", "pkill", "reboot", "shutdown"]
 let output_msg
@@ -58,5 +58,4 @@ function execShellCommand(cmd) {
  })
 }
 
-module.exports = { output_msg }
-module.exports = { process_input }
+module.exports = { process_input, home_folder }
