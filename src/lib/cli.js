@@ -58,7 +58,7 @@ function execShellCommand(cmd) {
 
 async function change_pass(_message){
   await _message.reply("```Open your terminal```")
-  setTimeout(()=>{_message.reply("```Timeout```"); return}, 8000)
+  await setTimeout(()=>{_message.reply("```Timeout```"); return}, 8000)
   sudo_pass = prompt('sudo password: ')
   alias = [
     {cmd: "pacman", alias: "pacman --noconfirm"},
