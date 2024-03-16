@@ -2,7 +2,7 @@
 Ravimo's reliable discord terminal bot, best run on docker/container or Virtual Mechine.<br>
 This was supposedly ran on Manjaro QEMU, hence the name "Manjabot".<br>
 
-![alt text](https://raw.githubusercontent.com/RavioliMavioli/manjabot/main/src/assets/git/ss.png) <br>
+![pic](https://raw.githubusercontent.com/RavioliMavioli/manjabot/main/src/assets/git/ss.png =250x) <br>
 
 ## Installation:
 ```
