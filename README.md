@@ -1,6 +1,6 @@
 # Manjabot
-Ravimo's reliable discord terminal bot, best run on docker/container or Virtual Mechine.
-This was supposedly ran on Manjaro QEMU, hence the name "Manjabot".
+Ravimo's reliable discord terminal bot, best run on docker/container or Virtual Mechine.<br>
+This was supposedly ran on Manjaro QEMU, hence the name "Manjabot".<br>
 
 ## Installation:
 ```
@@ -14,8 +14,8 @@ npm install
 Run ```>> help``` display bot commands.
 
 ## Token:<br>
-Token is stored in ```src/assets/manjakey.json.gpg``` with gpg encryption.
-The decryption is done via terminal when you first run the bot.
+Token is stored in ```src/assets/manjakey.json.gpg``` with gpg encryption.<br>
+The decryption is done via terminal when you first run the bot.<br>
 Json Structure:
 ```
 {
