@@ -1,7 +1,8 @@
 # Manjabot
 Ravimo's reliable discord terminal bot.<br>
-Control your PC via discord bot, for example you type ">> neofetch", it will print neofetch of the system you are in! <br>
-So basically ssh with 0 security. <br><br>
+Control your PC via discord bot, for example you type ```>> neofetch```,<br>
+it will print neofetch of the system you are in! <br>
+So basically ```ssh``` with 0 security. <br><br>
 Best ran on a docker/container or a Virtual Mechine for security reasons. <br>
 This was supposedly ran on Manjaro QEMU, hence the name "Manjabot".<br>
 
