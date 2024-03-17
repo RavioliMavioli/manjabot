@@ -3,7 +3,7 @@ const prompt = require('prompt-sync')()
 let sudo_pass = prompt('sudo password: ')
 let home_folder = os.homedir() + "/"
 let working_dir = home_folder
-let forbidden_commands = ["reboot", "shutdown", "xterm", "base64", "base32", "z-base", "Geohash"]
+let forbidden_commands = ["reboot", "shutdown", "xterm", "base64", "base32", "z-base", "Geohash", "power", "disable"]
 let forbidden_pkill = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "pid", "run", "bash", "zsh"]
 let output_msg
 let alias = [
