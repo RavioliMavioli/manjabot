@@ -32,5 +32,22 @@ Json Structure:
   bot_token: "your token"
 }
 ```
+<br><br>
+How to make your token file: <br><br>
+1. Go to ```src/assets/``` <br><br>
+2. Make a json file called ```manjakey.json```<br><br>
+3. Fill it with this (replace ```"your token"``` with your discrod bot token:<br>
+```
+{
+  bot_token: "your token"
+}
+```
+<br><br>
+4. On the directory you are in (```src/assets/```), run:<br>
+```gpg -c manjakey.json```<br><br>
+5. Fill the password on your liking, then delete ```manjakey.json```.
+
+
+
 
 
