@@ -3,8 +3,6 @@ const prompt = require('prompt-sync')()
 let sudo_pass = prompt('sudo password: ')
 let home_folder = os.homedir() + "/"
 let working_dir = home_folder
-let forbidden_commands = ["reboot", "shutdown", "xterm", "base64", "base32", "z-base", "Geohash", "power", "disable", "dd", "mkfs"]
-let forbidden_pkill = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "pid", "run", "bash", "zsh"]
 let output_msg
 let alias = [
   {cmd: "pacman", alias: "pacman --noconfirm"},
@@ -32,26 +30,9 @@ function execShellCommand(cmd) {
 
  return new Promise((resolve, reject) => {
   let can_exec = true
-
-  forbidden_commands.forEach((com) => {
-    if (cmd.includes(com)){
-      can_exec = false
-      resolve ("Gk boleh")
-    }
-  })
-
-  if (cmd.includes("kill")){
-    forbidden_pkill.forEach((k) => {
-      if (cmd.includes(k)){
-        can_exec = false
-        resolve ("Gk boleh")
-      }
-    })
-  }
-
   if (can_exec){
 
-    exec(cmd, {cwd: working_dir},(error, stdout, stderr) => {
+    exec(cmd, {cwd: working_dir, shell:"/bin/zsh", env:"~/.zshrc"},(error, stdout, stderr) => {
 
     if (error) {
       console.warn(error)

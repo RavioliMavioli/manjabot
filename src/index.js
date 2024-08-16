@@ -30,7 +30,7 @@ client.on("messageCreate", async (_message)=>{
 
   let msg = _message.content
   let msg_sliced = msg.substring(prefix.length)
-  console.log(msg)
+  console.log(`${_message.author.displayName}: ${msg}`)
   if (_message.author.bot) return
   if (msg.startsWith(prefix)){
     while (msg_sliced.startsWith(" ")) msg_sliced = msg_sliced.slice(1)
@@ -67,7 +67,7 @@ try{
 
       if (m.id == _message.reference.messageId) {
         if (!msg_sliced.includes(sendfile_prefix)) {
-          m.reply(msg).catch((err) => {ret_err(_message, err)})
+          m.reply(`${msg} \`-${_message.author.displayName}\``).catch((err) => {ret_err(_message, err)})
           _message.delete().catch((err) => {ret_err(_message, err)})
           return
         }
@@ -87,15 +87,13 @@ catch (err){
 }
 
 function send_msg (_message, msg){
-    _message.channel.send(msg).catch((err) => {ret_err(_message, err)})
+    _message.channel.send(`${msg} \`-${_message.author.displayName}\``).catch((err) => {ret_err(_message, err)})
     _message.delete().catch((err) => {ret_err(_message, err)})
 }
 
 function send_files (_message, msg){
-
     _message.reply({ files: [home_folder + msg] })
     .catch((err) => {ret_err(_message, err)})
-
 }
 
 function send_help(_message){
@@ -105,7 +103,7 @@ function send_help(_message){
 }
 
 function ret_err(_message, err){
-  _message.reply("Gagal :" + err.toString()).catch((err2) => {
+  _message.reply(err.toString()).catch((err2) => {
                                                                 console.log(err2.toString());
 
                                                               })
@@ -115,6 +113,11 @@ function ret_err(_message, err){
 
 async function send_ss(_message){
   const ss_path = home_folder + "Desktop/ss.jpg"
-  await command(`spectacle -f -b -o ${ss_path}`)
+  try{
+    await command(`spectacle -f -b -o ${ss_path}`)
+  }
+  catch(err){
+
+  }
   await send_files(_message, "Desktop/ss.jpg")
 }
