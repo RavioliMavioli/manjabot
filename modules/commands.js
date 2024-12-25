@@ -2,6 +2,7 @@
 import { ExecuteShell } from "./shell.js"
 import prefixes from "../prefix.json" with { type: "json" }
 import { homedir } from "os"
+import { ResetConversation } from "./cai.js"
 
 async function PassCommand(message){
   let msgAll = message.content
@@ -38,6 +39,13 @@ async function PassCommand(message){
       break
     case prefixes.screenshoot:
       await ScreenShoot(message)
+    case prefixes.resetAI:
+      await ResetConversation()
+      await message.reply("i forgor 💀")
+      .catch(async (err) => {
+        await _RetErr(message, err)
+      })
+      break
     default:
       let stdout = await ExecuteShell(msg)
       await message.reply(stdout)
@@ -59,6 +67,7 @@ async function SendHelp(message){
   let help = "```" + `
   >> ${prefixes.help}
   >> ${prefixes.screenshoot}
+  >> ${prefixes.resetAI}
   >> ${prefixes.send} {tulis apa disini terserah}
   >> ${prefixes.sendfile} {file path}
   >> {shell commands}

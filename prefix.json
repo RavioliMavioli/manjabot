@@ -3,6 +3,7 @@
     "send": "send",
     "sendfile": "sendfile",
     "help": "help",
-    "screenshoot": "ss"
+    "screenshoot": "ss",
+    "resetAI": "reset_ai"
 }
   

@@ -12,29 +12,14 @@ const tmpPath = "cai.json"
 let client = null
 let creds = null
 
-async function GenerateToken() {
-    let token = await client.generate_token(creds.email, 0);
-    return token
-}
-
-async function TryLogin(token) {
-    try{
-        await client.login(token)
-    }
-    catch(err){
-        const newToken = await GenerateToken()
-        await TryLogin(newToken)
-    }
-}
-
 async function StartCAI(){
     client = new CAINode()
     creds = await RetreiveCreds()
     await TryLogin(creds.token)
-    console.log("CAI Started: ")
+    console.log("CAI Started.")
 
     await client.character.connect(creds.characterId)
-    await client.character.create_new_conversation(false)
+    await ResetConversation()
     console.log("Manjabot AI connected.")
 }
 
@@ -54,19 +39,39 @@ async function Chat(message) {
 }
 
 function StartCAICron(){
-  // Every  15 minutes
-  const job = cron.schedule('*/15 * * * *', () => {
+  // Every  30 minutes
+  const job = cron.schedule('*/30 * * * *', () => {
     CAICronJob()
   })
   job.start()
 }
 
+async function ResetConversation() {
+  await client.character.create_new_conversation(false)
+}
+
 async function CAICronJob(){
   await TryLogin(creds.token)
+  console.log("CAI reconnected.")
   await client.character.connect(creds.characterId).catch((err) => {
     console.log(err)
   })
   console.log("Manjabot AI reconnected.")
+}
+
+async function GenerateToken() {
+  let token = await client.generate_token(creds.email, 0);
+  return token
+}
+
+async function TryLogin(token) {
+  try{
+      await client.login(token)
+  }
+  catch(err){
+      const newToken = await GenerateToken()
+      await TryLogin(newToken)
+  }
 }
 
 async function RetreiveCreds(){
@@ -97,4 +102,4 @@ async function _RetErr(message, err){
     console.log(err.toString())
   }
 
-export { StartCAI, Chat, StartCAICron }
+export { StartCAI, Chat, StartCAICron, ResetConversation }
