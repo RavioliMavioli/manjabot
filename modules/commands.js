@@ -62,6 +62,8 @@ async function SendHelp(message){
   >> ${send} {tulis apa disini terserah}
   >> ${sendfile} {file path}
   >> {shell commands}
+
+  Kalau mau chat sama aku, tinggal "Balas / Reply" pesanku aja.
   `
   + "```"
   await message.channel.send(help)
