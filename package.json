@@ -10,6 +10,7 @@
   "author": "Ravimo",
   "license": "ISC",
   "dependencies": {
+    "cainode": "^1.1.9",
     "discord.js": "^14.16.3",
     "prompt-sync": "^4.2.0"
   }
