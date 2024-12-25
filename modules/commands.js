@@ -99,7 +99,7 @@ async function Send(message, content){
   }
 }
 async function SendFile(message, content){
-  message.reply({ files: [homedir() + content] })
+  message.reply({ files: [homedir() + "/" + content] })
   .catch((err) => {_RetErr(message, err)})
 }
 
