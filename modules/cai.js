@@ -39,10 +39,11 @@ async function Chat(client, message) {
 
     const author = message.author.displayName
     const content = message.content
-    const response = await client.character.send_message(`${author} berkata: ${content}`)
+    const response = await client.character.send_message(`"${author}" berkata: ${content}`)
     const responseText = response.turn.candidates ? response.turn.candidates[0].raw_content : null
     
     if (!responseText) return
+
     await message.reply(responseText)
     .catch(async (err) => {
       await _RetErr(message, err)

@@ -57,10 +57,10 @@ async function SendEmuach(message){
 
 async function SendHelp(message){
   let help = "```" + `
-  >> ${_help}
-  >> ${screenshoot}
-  >> ${send} {tulis apa disini terserah}
-  >> ${sendfile} {file path}
+  >> ${prefixes.help}
+  >> ${prefixes.screenshoot}
+  >> ${prefixes.send} {tulis apa disini terserah}
+  >> ${prefixes.sendfile} {file path}
   >> {shell commands}
 
   Kalau mau chat sama aku, tinggal "Balas / Reply" pesanku aja.
