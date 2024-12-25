@@ -1,41 +1,44 @@
 import { CAINode } from "cainode"
 import { execSync } from 'child_process'
 import { readFileSync } from 'fs'
-import PromptSync from 'prompt-sync';
+import PromptSync from 'prompt-sync'
+import cron from 'node-cron'
 
 const prompt = PromptSync();
 
 const encPath = "cai.json.gpg"
 const tmpPath = "cai.json"
 
-async function GenerateToken(client) {
+let client = null
+let creds = null
+
+async function GenerateToken() {
     let token = await client.generate_token(creds.email, 0);
     return token
 }
 
-async function TryLogin(client, token) {
+async function TryLogin(token) {
     try{
         await client.login(token)
     }
     catch(err){
-        const newToken = await GenerateToken(client)
-        await TryLogin(client, newToken)
+        const newToken = await GenerateToken()
+        await TryLogin(newToken)
     }
 }
 
 async function StartCAI(){
-
-    const client = new CAINode()
-    const creds = await RetreiveCreds()
-    await TryLogin(client, creds.token)
+    client = new CAINode()
+    creds = await RetreiveCreds()
+    await TryLogin(creds.token)
     console.log("CAI Started: ")
+
     await client.character.connect(creds.characterId)
     await client.character.create_new_conversation(false)
     console.log("Manjabot AI connected.")
-    return client
 }
 
-async function Chat(client, message) {
+async function Chat(message) {
 
     const author = message.author.displayName
     const content = message.content
@@ -48,6 +51,22 @@ async function Chat(client, message) {
     .catch(async (err) => {
       await _RetErr(message, err)
     })
+}
+
+function StartCAICron(){
+  // Every  15 minutes
+  const job = cron.schedule('*/15 * * * *', () => {
+    CAICronJob()
+  })
+  job.start()
+}
+
+async function CAICronJob(){
+  await TryLogin(creds.token)
+  await client.character.connect(creds.characterId).catch((err) => {
+    console.log(err)
+  })
+  console.log("Manjabot AI reconnected.")
 }
 
 async function RetreiveCreds(){
@@ -78,4 +97,4 @@ async function _RetErr(message, err){
     console.log(err.toString())
   }
 
-export { StartCAI, Chat }
+export { StartCAI, Chat, StartCAICron }
