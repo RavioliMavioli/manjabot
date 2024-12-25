@@ -99,8 +99,8 @@ async function Send(message, content){
   }
 }
 async function SendFile(message, content){
-  message.reply({ files: [content] })
-  .catch((err) => {ret_err(_message, err)})
+  message.reply({ files: [homedir() + content] })
+  .catch((err) => {_RetErr(message, err)})
 }
 
 async function ScreenShoot(message, content){
