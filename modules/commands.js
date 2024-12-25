@@ -34,7 +34,7 @@ async function PassCommand(message){
       await Send(message, msgArrMerged)
       break
     case prefixes.sendfile:
-      await SendFile(message)
+      await SendFile(message, msgArrMerged)
       break
     case prefixes.screenshoot:
       await ScreenShoot(message)
