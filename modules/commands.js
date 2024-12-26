@@ -44,6 +44,7 @@ async function PassCommand(message){
       break
     case prefixes.screenshoot:
       ScreenShoot(message)
+      break
     case prefixes.resetAI:
       ResetConversation()
       ReplyMessage(message, "i forgor 💀")
