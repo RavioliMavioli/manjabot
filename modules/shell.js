@@ -23,19 +23,17 @@ async function ExecuteShell(command){
   return "```\n" + outputMsg + "```"
 }
 
-function TryExecShellCommand(command) {
+async function TryExecShellCommand(command) {
   alias.forEach((al) => {
     if (command.includes(al.cmd)) command = command.replace(al.cmd, al.alias)
   })
   return new Promise((resolve, reject) => {
     exec(command, {cwd: homeDir, shell:"/bin/bash", env:"~/.bashrc"},(error, stdout, stderr) => {
- 
-    if (error) {
-      console.warn(error)
-    }
-      resolve(stdout ? stdout : stderr)
-    })
- 
+      if (error) {
+        reject(error)
+      }
+        resolve(stdout ? stdout : stderr)
+      })
   })
  }
 

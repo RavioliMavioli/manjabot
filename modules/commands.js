@@ -1,8 +1,9 @@
 
+import { MessageType } from "discord.js"
 import { ExecuteShell } from "./shell.js"
-import prefixes from "../prefix.json" with { type: "json" }
-import { homedir } from "os"
 import { ResetConversation } from "./cai.js"
+import { homedir } from "os"
+import prefixes from "../prefix.json" with { type: "json" }
 
 async function PassCommand(message){
   let msgAll = message.content
@@ -22,48 +23,39 @@ async function PassCommand(message){
 
   if (message.author.bot) return
   if (!msgAll.startsWith(prefixes.prefix)) return
+
+  LogMessage(message, content)
+
   if (msgAll === prefixes.prefix) {
-    await SendEmuach(message)
+    ReplyMessage(message, "Emuach 🥰")
     return
   }
-  
+
   switch (subPrefix) {
     case prefixes.help:
-      await SendHelp(message)
+      SendHelp(message)
       break
     case prefixes.send:
-      await Send(message, msgArrMerged)
+      Send(message, msgArrMerged)
+      DeleteMessage(message)
       break
     case prefixes.sendfile:
-      await SendFile(message, msgArrMerged)
+      SendFile(message, msgArrMerged)
       break
     case prefixes.screenshoot:
-      await ScreenShoot(message)
+      ScreenShoot(message)
     case prefixes.resetAI:
-      await ResetConversation()
-      await message.reply("i forgor 💀")
-      .catch(async (err) => {
-        await _RetErr(message, err)
-      })
+      ResetConversation()
+      ReplyMessage(message, "i forgor 💀")
       break
     default:
       let stdout = await ExecuteShell(msg)
-      await message.reply(stdout)
-      .catch(async (err) => {
-        await _RetErr(message, err)
-      })
+      ReplyMessage(message, stdout)
       break
   }
 }
 
-async function SendEmuach(message){
-  await message.reply("emuach")
-  .catch(async (err) => {
-    await _RetErr(message, err)
-  })
-}
-
-async function SendHelp(message){
+function SendHelp(message){
   let help = "```" + `
   >> ${prefixes.help}
   >> ${prefixes.screenshoot}
@@ -75,76 +67,69 @@ async function SendHelp(message){
   Kalau mau chat sama aku, tinggal "Balas / Reply" pesanku aja.
   `
   + "```"
-  await message.channel.send(help)
-  .catch(async (err) => {
-    await _RetErr(message, err)
-  })
+  ReplyMessage(message, help)
 }
 
 async function Send(message, content){
-  try{
-    if (message.reference === null || message.reference === undefined || message.reference === ""){
-        await _SendMessage(message, content)
-        return
-    }
-
-    let msgs = await message.channel.messages.fetch()
-    msgs.filter(async (m) => {
-      if (m.id != message.reference.messageId) return
-
-      await m.reply(`${content} \`-${message.author.displayName}\``)
-      .catch(async (err) => {
-        await _RetErr(message, err)
-      })
-      await message.delete()
-      .catch(async (err) => {
-        await _RetErr(message, err)
-      })
-    })
+  const contentQuoted = `${content} \`-${message.author.displayName}\``
+  if (message.type !== MessageType.Reply){
+      SendMessage(message, contentQuoted)
+      return
   }
-  catch (err){
-    await _RetErr(message, err)
-    console.log(err.toString())
-  }
+
+  let msgs = await message.channel.messages.fetch()
+  msgs.filter((m) => {
+    if (m.id != message.reference.messageId) return
+    ReplyMessage(m, contentQuoted)
+  })
 }
-async function SendFile(message, content){
+
+function SendFile(message, content){
   message.reply({ files: [homedir() + "/" + content] })
-  .catch((err) => {_RetErr(message, err)})
+  .catch((err) => {RetErr(message, err)})
 }
 
-async function ScreenShoot(message, content){
-  await _UnusableCommand(message)
+function ScreenShoot(message, content){
+  UnusableCommand(message)
 }
 
-async function DeleteMessages(message, content) {
-  await _UnusableCommand(message)
-}
-
-async function _SendMessage (message, content){
-  await message.channel.send(`${content} \` - ${message.author.displayName}\``)
-  .catch(async (err) => {
-    await _RetErr(message, err)
-  })
-
-  await message.delete()
-  .catch(async (err) => {
-    await _RetErr(message, err)
+function DeleteMessage(message) {
+  message.delete()
+  .catch((err) => {
+    RetErr(message, err)
   })
 }
 
-async function _RetErr(message, err){
-  await message.reply(err.toString())
+function ReplyMessage (message, content){
+  message.reply(content)
+  .catch((err) => {
+    RetErr(message, err)
+  })
+  LogMessage(message, content)
+}
+
+function SendMessage (message, content){
+  message.channel.send(content)
+  .catch((err) => {
+    RetErr(message, err)
+  })
+  LogMessage(message, content)
+}
+
+function RetErr(message, err){
+  message.reply(err.toString())
   .catch((err2) => {
     console.log(err2.toString())
   })
   console.log(err.toString())
 }
 
-async function _UnusableCommand(message) {
-  await message.reply("Command currently cannot be used.")
-  .catch(async (err) => {
-    await _RetErr(message, err)
-  })
+function UnusableCommand(message){
+  ReplyMessage(message, "Command currently cannot be used.")
 }
 
-export { PassCommand }
+function LogMessage(message, content){
+  console.log(`${message.author.displayName}: ${content}`)
+}
+
+export { PassCommand, ReplyMessage, SendMessage }

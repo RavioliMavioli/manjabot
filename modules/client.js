@@ -1,6 +1,12 @@
 import { Client, IntentsBitField } from "discord.js"
+import { RetreiveCreds } from "./creds.js"
 
-function StartClient(token){
+function StartClient(){
+  const creds = RetreiveCreds(
+    "token.json.gpg",
+    "token.json",
+    "Token GPG Password: "
+  )
   const client = new Client({
     intents: [
       IntentsBitField.Flags.Guilds,         // Server
@@ -10,11 +16,10 @@ function StartClient(token){
     ]
   })
 
-  client.login(token)
-  client.on("ready", (_client)=> {
-      console.log(`${_client.user.tag} is online`)
+  client.login(creds.token)
+  client.on("ready", (c)=> {
+      console.log(`${c.user.tag} is online`)
   })
-  
   return client
 }
 
