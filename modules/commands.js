@@ -24,7 +24,7 @@ async function PassCommand(message){
   if (message.author.bot) return
   if (!msgAll.startsWith(prefixes.prefix)) return
 
-  LogMessage(message, content)
+  LogMessage(message, message.content)
 
   if (msgAll === prefixes.prefix) {
     ReplyMessage(message, "Emuach 🥰")
