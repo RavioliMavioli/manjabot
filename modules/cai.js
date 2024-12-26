@@ -3,14 +3,14 @@ import { ReplyMessage } from "./commands.js"
 import { RetreiveCreds } from "./creds.js";
 import cron from 'node-cron'
 
+const creds = RetreiveCreds(
+  "cai.json.gpg",
+  "cai.json",
+  "CAI GPG Password: "
+)
 let client = null
 
 async function StartCAI(){
-  const creds = RetreiveCreds(
-    "cai.json.gpg",
-    "cai.json",
-    "CAI GPG Password: "
-  )
   client = new CAINode()
   await TryLogin(creds.token)
   console.log("CAI Started.")
@@ -21,7 +21,6 @@ async function StartCAI(){
 }
 
 async function Chat(message) {
-
     const author = message.author.displayName
     const content = message.content
     const response = await client.character.send_message(`"${author}": ${content}`)
