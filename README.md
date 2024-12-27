@@ -1,8 +1,8 @@
 # Manjabot
-Control your PC/Container/VM via discord bot, for example you type ```>> neofetch```,<br>
+Expose your PC/Container/VM via discord bot, for example you type ```>> neofetch```,<br>
 it will print neofetch of the system you are in! <br><br>
 
-Best ran on a docker/container or a Virtual Mechine for security reasons. <br>
+Best ran on Container or Virtual Mechine for security reasons. <br>
 
 ## Installation:
 ```
