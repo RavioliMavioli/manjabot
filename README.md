@@ -41,8 +41,16 @@ How to make your token file: <br><br>
 4. run:<br>
 ```gpg -c token.json```<br><br>
 5. Fill the password on your liking, then delete ```token.json```.
-
-
-
-
-
+<br><br>
+## C.AI:<br>
+C.AI need token and character's ID. If you don't have token you can input email instead.<br>
+C.AI credentials are stored in ```cai.json.gpg``` with gpg encryption.<br>
+Json Structure:
+```
+{
+  "token": "your c.ai token",
+  "email": "your email",
+  "characterId": "your character's ID, obtained via link"
+}
+```
+<br><br>
