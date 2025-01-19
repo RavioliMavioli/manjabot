@@ -1,13 +1,11 @@
-import { homedir } from "os"
 import { exec } from "child_process"
 
 const MAX_LENGTH = 2000
-const homeDir = homedir()
 
 let outputMsg = null
 
-async function ExecuteShell(command, sudo){
-  outputMsg = await TryExecShellCommand(command, sudo)
+async function ExecuteShell(command, sudo, home){
+  outputMsg = await TryExecShellCommand(command, sudo, home)
 
   if (outputMsg === null || outputMsg === undefined || outputMsg === "") return "``` ```"
   if (outputMsg.length >= MAX_LENGTH) return "```\n" + outputMsg.slice(0, MAX_LENGTH/2) + "```"
@@ -15,9 +13,10 @@ async function ExecuteShell(command, sudo){
   return "```\n" + outputMsg + "```"
 }
 
-async function TryExecShellCommand(command, sudo) {
+async function TryExecShellCommand(command, sudo, home) {
   let alias = [
     {cmd: "apt", alias: "apt -y"},
+    {cmd: "pacman", alias: "pacman --noconfirm"},
     {cmd: "neofetch", alias: "neofetch --stdout"},
     {cmd: "sudo", alias: `echo ${sudo} | sudo -S`}
   ]
@@ -25,7 +24,7 @@ async function TryExecShellCommand(command, sudo) {
     if (command.includes(al.cmd)) command = command.replace(al.cmd, al.alias)
   })
   return new Promise((resolve, _) => {
-    exec(command, {cwd: homeDir, shell:"/bin/bash", env:"~/.bashrc"},(error, stdout, stderr) => {
+    exec(command, {cwd: home, shell:"/bin/bash"},(error, stdout, stderr) => {
       if (error) {
         console.log(error)
       }

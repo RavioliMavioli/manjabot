@@ -2,6 +2,7 @@ import { StartClient } from "./modules/client.js"
 import { PassCommand } from "./modules/commands.js"
 import { StartCAI, Chat, StartCAICron } from "./modules/cai.js"
 import { RetreiveCreds } from "./modules/creds.js"
+import { homedir } from "os"
 import PromptSync from 'prompt-sync'
 import minimist from "minimist"
 
@@ -11,7 +12,7 @@ function Main(){
   // Get arguments if any
   let args = minimist(process.argv.slice(2))
   let sudo = args.sudo ? args.sudo : prompt('sudo password: ')
-  
+  let home = args.home ? args.home : homedir()
   // Get credentials
   const CAIcreds = RetreiveCreds(
     "cai.json.gpg",
@@ -31,7 +32,7 @@ function Main(){
 
   // Start C.AI
   StartCAI(CAIcreds)
-  StartCAICron()
+  StartCAICron(CAIcreds)
 
   // Listen to messages
   client.on("messageCreate", async (message)=>{
@@ -40,7 +41,7 @@ function Main(){
     }
     else{
       console.log(sudo)
-      PassCommand(message, sudo)
+      PassCommand(message, sudo, home)
     }
   })
   

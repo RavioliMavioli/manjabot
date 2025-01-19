@@ -2,10 +2,9 @@
 import { MessageType } from "discord.js"
 import { ExecuteShell } from "./shell.js"
 import { ResetConversation } from "./cai.js"
-import { homedir } from "os"
 import prefixes from "../prefix.json" with { type: "json" }
 
-async function PassCommand(message, sudo){
+async function PassCommand(message, sudo, home){
   let msgAll = message.content
   let msg = msgAll.substring(prefixes.prefix.length)
   let msgArr = null
@@ -40,7 +39,7 @@ async function PassCommand(message, sudo){
       DeleteMessage(message)
       break
     case prefixes.sendfile:
-      SendFile(message, msgArrMerged)
+      SendFile(message, msgArrMerged, home)
       break
     case prefixes.screenshoot:
       ScreenShoot(message)
@@ -50,7 +49,7 @@ async function PassCommand(message, sudo){
       ReplyMessage(message, "i forgor 💀")
       break
     default:
-      let stdout = await ExecuteShell(msg, sudo)
+      let stdout = await ExecuteShell(msg, sudo, home)
       ReplyMessage(message, stdout)
       break
   }
@@ -85,8 +84,8 @@ async function Send(message, content){
   })
 }
 
-function SendFile(message, content){
-  message.reply({ files: [homedir() + "/" + content] })
+function SendFile(message, content, home){
+  message.reply({ files: [home + "/" + content] })
   .catch((err) => {RetErr(message, err)})
 }
 

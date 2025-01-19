@@ -25,10 +25,10 @@ async function Chat(message) {
     ReplyMessage(message, responseText)
 }
 
-function StartCAICron(){
+function StartCAICron(creds){
   // Every  30 minutes
   const job = cron.schedule('*/30 * * * *', () => {
-    CAIHandShake()
+    CAIHandShake(creds)
   })
   job.start()
 }
@@ -37,7 +37,7 @@ function ResetConversation() {
   client.character.create_new_conversation(false)
 }
 
-async function CAIHandShake(){
+async function CAIHandShake(creds){
   await TryLogin(creds.token)
   console.log("CAI reconnected.")
   await client.character.connect(creds.characterId).catch((err) => {
