@@ -5,7 +5,7 @@ import { ResetConversation } from "./cai.js"
 import { homedir } from "os"
 import prefixes from "../prefix.json" with { type: "json" }
 
-async function PassCommand(message){
+async function PassCommand(message, sudo){
   let msgAll = message.content
   let msg = msgAll.substring(prefixes.prefix.length)
   let msgArr = null
@@ -50,7 +50,7 @@ async function PassCommand(message){
       ReplyMessage(message, "i forgor 💀")
       break
     default:
-      let stdout = await ExecuteShell(msg)
+      let stdout = await ExecuteShell(msg, sudo)
       ReplyMessage(message, stdout)
       break
   }

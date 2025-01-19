@@ -1,12 +1,6 @@
 import { Client, IntentsBitField } from "discord.js"
-import { RetreiveCreds } from "./creds.js"
 
-function StartClient(){
-  const creds = RetreiveCreds(
-    "token.json.gpg",
-    "token.json",
-    "Token GPG Password: "
-  )
+function StartClient(creds){
   const client = new Client({
     intents: [
       IntentsBitField.Flags.Guilds,         // Server

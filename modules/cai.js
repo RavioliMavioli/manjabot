@@ -1,16 +1,10 @@
 import { CAINode } from "cainode"
 import { ReplyMessage } from "./commands.js"
-import { RetreiveCreds } from "./creds.js";
 import cron from 'node-cron'
 
-const creds = RetreiveCreds(
-  "cai.json.gpg",
-  "cai.json",
-  "CAI GPG Password: "
-)
 let client = null
 
-async function StartCAI(){
+async function StartCAI(creds){
   client = new CAINode()
   await TryLogin(creds.token)
   console.log("CAI Started.")
